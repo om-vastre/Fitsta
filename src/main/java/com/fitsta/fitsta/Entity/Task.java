@@ -24,9 +24,12 @@ public class Task {
     @ManyToOne
     private Trainer taskTrainer;
 
+    @ManyToOne
+    private User taskUser;
+
 
     public Task(Integer id, Date workoutDate, String workout, String diet, String duration, String calories,
-            Boolean iscompleted, Trainer taskTrainer) {
+            Boolean iscompleted, Trainer taskTrainer, User taskUser) {
         this.id = id;
         WorkoutDate = workoutDate;
         Workout = workout;
@@ -35,6 +38,7 @@ public class Task {
         Calories = calories;
         Iscompleted = iscompleted;
         this.taskTrainer = taskTrainer;
+        this.taskUser = taskUser;
     }
 
     public Task() {
@@ -102,6 +106,14 @@ public class Task {
 
     public void setTaskTrainer(Trainer taskTrainer) {
         this.taskTrainer = taskTrainer;
+    }
+
+    public User getTaskUser() {
+        return taskUser;
+    }
+
+    public void setTaskUser(User taskUser) {
+        this.taskUser = taskUser;
     }
 
 

@@ -50,15 +50,61 @@ public class FitstaApplication {
 			pp2.setExpirydate(new java.sql.Date(dateFormat.parse("25/09/23").getTime()));
 
 			List<User> users = new ArrayList<>();
-			User u1 = new User(0, "Om", new java.sql.Date(dateFormat.parse("04/11/03").getTime()), "Male", "7410852963", "Begampur", 50, 164, "om04@gmail.com", "Pass@123", t1, pp1);
+			User u1 = new User();
+			// u1.setId(0);
+			u1.setName("Om");
+			u1.setDob(new java.sql.Date(dateFormat.parse("04/11/03").getTime()));
+			u1.setGender("Male");
+			u1.setContactno("7410852963");
+			u1.setAddress("Begampur");
+			u1.setWeight(50);
+			u1.setHeight(164);
+			u1.setUsername("om04@gmail.com");
+			u1.setPassword("Pass@123");
+			u1.setTrainer(t1);
+			u1.setUserPlansPurchase(pp1);
 			users.add(u1);
-			User u2 = new User(0, "Imran", new java.sql.Date(dateFormat.parse("10/10/03").getTime()), "Male", "8529637410", "Bramhapuri", 60, 162, "imran@gmail.com", "Pass@123", t1, pp2);
+
+			User u2 = new User();
+			// u2.setId(0);
+			u2.setName("Imran");
+			u2.setDob(new java.sql.Date(dateFormat.parse("10/10/03").getTime()));
+			u2.setGender("Male");
+			u2.setContactno("8529637410");
+			u2.setAddress("Bramhapuri");
+			u2.setWeight(60);
+			u2.setHeight(162);
+			u2.setUsername("imran@gmail.com");
+			u2.setPassword("Pass@123");
+			u2.setTrainer(t1);
+			u2.setUserPlansPurchase(pp2);
 			users.add(u2);
 			
+			Task tsk1 = new Task(0, new java.sql.Date(dateFormat.parse("26/09/23").getTime()), "Cardio", "80g Paneer", "2", "1500", true, t1, u1);
+			Task tsk2 = new Task(0, new java.sql.Date(dateFormat.parse("27/09/23").getTime()), "Leg", "80g Paneer", "2", "1000", false, t1, u1);
+			Task tsk3 = new Task(0, new java.sql.Date(dateFormat.parse("26/09/23").getTime()), "Cardio", "80g Paneer", "2", "1200", true, t1, u2);
+			Task tsk4 = new Task(0, new java.sql.Date(dateFormat.parse("27/09/23").getTime()), "Leg", "80g Paneer", "2", "1300", false, t1, u2);
+			List<Task> tasks = new ArrayList<>();
+			tasks.add(tsk1);
+			tasks.add(tsk2);
+			tasks.add(tsk3);
+			tasks.add(tsk4);
+
+			List<Task> u1Tasks = new ArrayList<>();
+			u1Tasks.add(tsk1);
+			u1Tasks.add(tsk2);
+			u1.setTasks(u1Tasks);
+
+			List<Task> u2Tasks = new ArrayList<>();
+			u2Tasks.add(tsk3);
+			u2Tasks.add(tsk4);
+			u2.setTasks(u2Tasks);
+
+			t1.setTasks(tasks);
+
 			pp1.setEnrolleduser(u1);
 			pp2.setEnrolleduser(u2);
-
-			t1.setUsers(users);
+			// t1.setUsers(users);
 
 
 			List<Plans> plans = new ArrayList<>();
@@ -69,12 +115,9 @@ public class FitstaApplication {
 			pp1.setEnrolledplan(p1);
 			pp2.setEnrolledplan(p1);
 
-			Task tsk1 = new Task(0, new java.sql.Date(dateFormat.parse("25/09/23").getTime()), "Cardio", "80g Paneer", "2", "1500", true, t1);
-			Task tsk2 = new Task(0, new java.sql.Date(dateFormat.parse("26/09/23").getTime()), "Leg", "80g Paneer", "2", "1000", false, t1);
-			List<Task> tasks = new ArrayList<>();
-			tasks.add(tsk1);
-			tasks.add(tsk2);
-			t1.setTasks(tasks);
+
+			t1.setUsers(users);
+
 
 			Trainer savedTrainer = trainerRepository.save(t1);
 
@@ -87,6 +130,12 @@ public class FitstaApplication {
 				System.out.println("\t Users -> Purchsed Plan -> Name : "+eachUser.getUserPlansPurchase().getEnrolledplan().getName());
 				System.out.println("\t Users -> Purchsed Plan -> Purchased Date : "+eachUser.getUserPlansPurchase().getPurchasedate());
 				System.out.println("\t Users -> Purchsed Plan -> Expiry Date : "+eachUser.getUserPlansPurchase().getExpirydate());
+				for (Task eachTask : eachUser.getTasks()) {
+					System.out.println("\t Users -> Task -> ID : "+ eachTask.getId());
+					System.out.println("\t Users -> Task -> Date : "+ eachTask.getWorkoutDate());
+					System.out.println("\t Users -> Task -> Workout : "+ eachTask.getWorkout());
+					System.out.println("\t Users -> Task -> Completed? : "+ eachTask.getIscompleted());
+				}
 			}
 
 			System.out.println("\nTrainers -> Plans : ");

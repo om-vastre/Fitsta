@@ -1,6 +1,8 @@
 package com.fitsta.fitsta.Entity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -8,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
 
@@ -33,8 +36,13 @@ public class User {
     @OneToOne(mappedBy = "enrolleduser", cascade = CascadeType.ALL, orphanRemoval = true)
     private PlansPurchase userPlansPurchase;
 
+    @OneToMany(mappedBy = "taskUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Task> tasks = new ArrayList<>();
+
+
     public User(Integer id, String name, Date dob, String gender, String contactno, String address, Integer weight,
-            Integer height, String username, String password, Trainer trainer, PlansPurchase userPlansPurchase) {
+            Integer height, String username, String password, Trainer trainer, PlansPurchase userPlansPurchase,
+            List<Task> tasks) {
         this.id = id;
         this.name = name;
         this.dob = dob;
@@ -47,6 +55,7 @@ public class User {
         this.password = password;
         this.trainer = trainer;
         this.userPlansPurchase = userPlansPurchase;
+        this.tasks = tasks;
     }
 
     public User() {
@@ -148,8 +157,15 @@ public class User {
         this.userPlansPurchase = userPlansPurchase;
     }
 
+    public List<Task> getTasks() {
+        return tasks;
+    }
 
-    
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
+    }
+
+   
     // @ManyToOne
     // private Trainer trainer;
 
