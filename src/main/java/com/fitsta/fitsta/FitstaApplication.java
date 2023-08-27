@@ -12,6 +12,7 @@ import org.springframework.context.ApplicationContext;
 import com.fitsta.fitsta.Entity.Orders;
 import com.fitsta.fitsta.Entity.Plans;
 import com.fitsta.fitsta.Entity.PlansPurchase;
+import com.fitsta.fitsta.Entity.Product;
 import com.fitsta.fitsta.Entity.Task;
 import com.fitsta.fitsta.Entity.Trainer;
 import com.fitsta.fitsta.Entity.User;
@@ -25,6 +26,7 @@ public class FitstaApplication {
 		ApplicationContext context = SpringApplication.run(FitstaApplication.class, args);
 		// ProductRepository productRepository = context.getBean(ProductRepository.class);
 		TrainerRepository trainerRepository = context.getBean(TrainerRepository.class);
+		ProductRepository productRepository = context.getBean(ProductRepository.class);
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
 		try {
@@ -115,18 +117,34 @@ public class FitstaApplication {
 			pp1.setEnrolledplan(p1);
 			pp2.setEnrolledplan(p1);
 
+			Product pro1 = new Product();
+			pro1.setName("MB Weight Gainer");
+			pro1.setImage1("/product/img1.jpg");
+			pro1.setImage2("/product/img2.jpg");
+			pro1.setDescription("Weight Gainer from Muscle Blaze containing carbos and other ingredients.");
+			pro1.setProductPrice("5000");
+			Product savedProduct = productRepository.save(pro1);
 
 			List<Orders> u1Orders = new ArrayList<>();
-			Orders o1 = new Orders(0, new java.sql.Date(dateFormat.parse("28/09/23").getTime()), 5000, u1);
+			Orders o1 = new Orders();
+			o1.setId(0);
+			o1.setOrderDate(new java.sql.Date(dateFormat.parse("28/09/23").getTime()));
+			o1.setTotalAmount(5000);
+			o1.setOrderUser(u1);
+			o1.setOrderProduct(savedProduct); 
 			u1Orders.add(o1);
 			u1.setOrders(u1Orders);
-
+			
 			List<Orders> u2Orders = new ArrayList<>();
-			Orders o2 = new Orders(0, new java.sql.Date(dateFormat.parse("28/09/23").getTime()), 5000, u2);
+			Orders o2 = new Orders();
+			o2.setId(0);
+			o2.setOrderDate(new java.sql.Date(dateFormat.parse("28/09/23").getTime()));
+			o2.setTotalAmount(5000);
+			o2.setOrderUser(u2);
+			o2.setOrderProduct(savedProduct); 
 			u2Orders.add(o2);
 			u2.setOrders(u2Orders);
-
-
+			
 			t1.setUsers(users);
 
 
@@ -146,6 +164,14 @@ public class FitstaApplication {
 					System.out.println("\t Users -> Task -> Date : "+ eachTask.getWorkoutDate());
 					System.out.println("\t Users -> Task -> Workout : "+ eachTask.getWorkout());
 					System.out.println("\t Users -> Task -> Completed? : "+ eachTask.getIscompleted());
+				}
+
+				for (Orders eachOrders : eachUser.getOrders()) {
+					System.out.println("\t Users -> Orders -> Id : "+ eachOrders.getId());
+					System.out.println("\t Users -> Orders -> Product -> Name : "+ eachOrders.getOrderProduct().getName());
+					System.out.println("\t Users -> Orders -> User -> Name : "+ eachOrders.getOrderUser().getName());
+					System.out.println("\t Users -> Orders -> Total Amount : "+ eachOrders.getTotalAmount());
+					System.out.println("\t Users -> Orders -> Date : "+ eachOrders.getOrderDate());
 				}
 			}
 

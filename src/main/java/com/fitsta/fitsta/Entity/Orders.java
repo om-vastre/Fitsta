@@ -20,12 +20,16 @@ public class Orders {
     @ManyToOne
     private User orderUser;
 
-    
-    public Orders(Integer id, Date orderDate, Integer totalAmount, User orderUser) {
+    @ManyToOne
+    private Product orderProduct;
+
+
+    public Orders(Integer id, Date orderDate, Integer totalAmount, User orderUser, Product orderProduct) {
         Id = id;
         OrderDate = orderDate;
         TotalAmount = totalAmount;
         this.orderUser = orderUser;
+        this.orderProduct = orderProduct;
     }
 
     public Orders() {
@@ -63,7 +67,14 @@ public class Orders {
         this.orderUser = orderUser;
     }
 
+    public Product getOrderProduct() {
+        return orderProduct;
+    }
 
+    public void setOrderProduct(Product orderProduct) {
+        this.orderProduct = orderProduct;
+    }
+    
     
 }
 
