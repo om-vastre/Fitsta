@@ -19,11 +19,13 @@ public class AdminServices {
         if (admin != null && !admin.isEmpty()){
             String[] data = new String[2];
             data[0]=""+admin.get(0).getId();
-            data[1]="Success";
+            data[1]="admin";
+            data[2]="Success";
             return data;
         }else{
             String[] data = new String[2];
             data[0]="";
+            data[1]="";
             data[1]="failed";
             return data;
         }
