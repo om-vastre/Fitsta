@@ -17,20 +17,18 @@ public class AdminServices {
     public String[] adminLogin(String username, String pass){
         List<Admin> admin = this.adminRepository.findByUsernameAndPassword(username, pass);
         if (admin != null && !admin.isEmpty()){
-            String[] data = new String[2];
+            String[] data = new String[3];
             data[0]=""+admin.get(0).getId();
             data[1]="admin";
             data[2]="Success";
             return data;
         }else{
-            String[] data = new String[2];
+            String[] data = new String[3];
             data[0]="";
             data[1]="";
             data[1]="failed";
             return data;
         }
     }
-
-
 
 }

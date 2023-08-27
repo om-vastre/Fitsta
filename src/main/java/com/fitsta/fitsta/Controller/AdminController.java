@@ -46,26 +46,31 @@ public class AdminController {
     }
 
     @PostMapping(value="/login")
-    public ResponseEntity<String> Login(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("type") String usertype) {
-
+    public ResponseEntity<String> Login(@RequestParam("username") String username, @RequestParam("password") String password) {
         String[] result;
-        if(usertype.equals("admin")){
-            result = this.adminServices.adminLogin(username, password);
-        }
-        else if(usertype.equals("trainer")){
-            result = this.trainerServices.login(username, password);
-        }
-        else{
-            result = this.userServices.login(username, password);
-        }
 
-        if(result[1].equals("Success")){
+        result = this.adminServices.adminLogin(username, password);
+        if(!result[0].equals("")){
             String token = generateToken(16);
-            this.loginsRepository.save(new Logins(0, usertype, null, token));
-            return ResponseEntity.ok().body("{\"message\":\"success\",\"token\":\""+ token +"\",\"id\":"+result[0]+"}");
+            this.loginsRepository.save(new Logins(0, result[1], null, token));
+            return ResponseEntity.ok().body("{\"message\" : \"success\",\"token\" : \""+ token +"\",\"type\" : \""+result[1]+"\",\"id\" : "+result[0]+"}");
         }
-        else{return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("{\"message\":\"Invalid Credentials\"");}
 
+        result = this.trainerServices.login(username, password);
+        if(!result[0].equals("")){
+            String token = generateToken(16);
+            this.loginsRepository.save(new Logins(0, result[1], null, token));
+            return ResponseEntity.ok().body("{\"message\" : \"success\",\"token\" : \""+ token +"\",\"type\" : \""+result[1]+"\",\"id\" : "+result[0]+"}");
+        }
+
+        result = this.userServices.login(username, password);
+        if(!result[0].equals("")){
+            String token = generateToken(16);
+            this.loginsRepository.save(new Logins(0, result[1], null, token));
+            return ResponseEntity.ok().body("{\"message\" : \"success\",\"token\" : \""+ token +"\",\"type\" : \""+result[1]+"\",\"id\" : "+result[0]+"}");
+        }
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("{\"message\":\"Invalid Credentials\"");
     }
 
     @PostMapping("/logout")
