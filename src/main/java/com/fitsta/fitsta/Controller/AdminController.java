@@ -73,6 +73,7 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("{\"message\":\"Invalid Credentials\"");
     }
 
+
     @PostMapping("/logout")
     public ResponseEntity<String> Logout(@RequestParam("token") String token){
         try{

@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +64,7 @@ public class ProductController {
         newProduct.setProductPrice(productPrice);
 
         String Path = "";
-
+        String currTime = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
 
         try {
             Path = new ClassPathResource("static/images/product/").getFile().getAbsolutePath();
@@ -74,52 +76,52 @@ public class ProductController {
 
         if (image1 != null) {
             try {
-                Files.copy(image1.getInputStream(), Paths.get(Path + File.separator + id + "_" +  image1.getOriginalFilename()),
+                Files.copy(image1.getInputStream(), Paths.get(Path + File.separator + currTime + "_" +  image1.getOriginalFilename()),
                 StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException e) {
                 e.printStackTrace();
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload image!");
             }
-            newProduct.setImage1(ServletUriComponentsBuilder.fromCurrentContextPath().path("/images/product/"+id+"_" + image1.getOriginalFilename()).toUriString());
+            newProduct.setImage1(ServletUriComponentsBuilder.fromCurrentContextPath().path("/images/product/"+ currTime +"_" + image1.getOriginalFilename()).toUriString());
         } else {
             newProduct.setImage1("");
         }
 
         if (image2 != null) {
             try {
-                Files.copy(image2.getInputStream(), Paths.get(Path + File.separator + id + "_" + image2.getOriginalFilename()),
+                Files.copy(image2.getInputStream(), Paths.get(Path + File.separator + currTime + "_" + image2.getOriginalFilename()),
                 StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException e) {
                 e.printStackTrace();
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload image!");
             }
-            newProduct.setImage2(ServletUriComponentsBuilder.fromCurrentContextPath().path("/images/product/"+id+"_" + image2.getOriginalFilename()).toUriString());
+            newProduct.setImage2(ServletUriComponentsBuilder.fromCurrentContextPath().path("/images/product/"+currTime+"_" + image2.getOriginalFilename()).toUriString());
         } else {
             newProduct.setImage2("");
         }
 
         if (image3 != null) {
             try {
-                Files.copy(image3.getInputStream(), Paths.get(Path + File.separator + id + "_" + image3.getOriginalFilename()),
+                Files.copy(image3.getInputStream(), Paths.get(Path + File.separator + currTime + "_" + image3.getOriginalFilename()),
                 StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException e) {
                 e.printStackTrace();
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload image!");
             }
-            newProduct.setImage3(ServletUriComponentsBuilder.fromCurrentContextPath().path("/images/product/"+id+"_" + image3.getOriginalFilename()).toUriString());
+            newProduct.setImage3(ServletUriComponentsBuilder.fromCurrentContextPath().path("/images/product/"+currTime+"_" + image3.getOriginalFilename()).toUriString());
         } else {
             newProduct.setImage3("");
         }
 
         if (image4 != null) {
             try {
-                Files.copy(image4.getInputStream(), Paths.get(Path + File.separator + id + "_" + image4.getOriginalFilename()),
+                Files.copy(image4.getInputStream(), Paths.get(Path + File.separator + currTime + "_" + image4.getOriginalFilename()),
                 StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException e) {
                 e.printStackTrace();
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload image!");
             }
-            newProduct.setImage4(ServletUriComponentsBuilder.fromCurrentContextPath().path("/images/product/"+id+"_" + image4.getOriginalFilename()).toUriString());
+            newProduct.setImage4(ServletUriComponentsBuilder.fromCurrentContextPath().path("/images/product/"+currTime+"_" + image4.getOriginalFilename()).toUriString());
         } else {
             newProduct.setImage4("");
         }
