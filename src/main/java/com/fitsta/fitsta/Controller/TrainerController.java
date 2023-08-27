@@ -31,7 +31,7 @@ import com.fitsta.fitsta.Entity.Trainer;
 import com.fitsta.fitsta.Service.TrainerServices;
 
 @RestController
-@RequestMapping("/api/trainer/")
+@RequestMapping("/api/trainer")
 public class TrainerController {
     
     @Autowired
