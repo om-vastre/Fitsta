@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,6 +28,7 @@ public class Product {
     private String Image2;
     private String Image3;
     private String Image4;
+    @Column(columnDefinition = "VARCHAR(10000)")
     private String Description;
     private String ProductPrice;
 

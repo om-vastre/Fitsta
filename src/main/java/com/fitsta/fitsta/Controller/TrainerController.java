@@ -76,15 +76,11 @@ public class TrainerController {
         Trainer newTrainer = new Trainer();
 
         newTrainer.setId(id);
-        // newTrainer.setId( Integer.parseInt(id) );
         newTrainer.setName(name);
-        // newTrainer.setDob(dob);
         try {
             newTrainer.setDob(new SimpleDateFormat("yy-dd-MM").parse(dob));
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        } catch (ParseException e) {e.printStackTrace();}
+
         newTrainer.setGender(gender);
         newTrainer.setContactno(contactno);
         newTrainer.setSpecialization(specialization);
@@ -92,27 +88,33 @@ public class TrainerController {
         newTrainer.setUsername(username);
         newTrainer.setPassword(password);
 
-        String Path = "";
-        String currTime = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
-
-        try {
-            Path = new ClassPathResource("static/images/trainer/").getFile().getAbsolutePath();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Path not found!");
+        if(img.getSize() == 0 && id!=0){
+            newTrainer.setImage(this.trainerServices.getTrainer(id).getImage());
         }
-        if (img != null) {
+        else{
+            String Path = "";
+            String currTime = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
+
             try {
-                Files.copy(img.getInputStream(), Paths.get(Path + File.separator + currTime + "_" +  img.getOriginalFilename()),
-                StandardCopyOption.REPLACE_EXISTING);
+                Path = new ClassPathResource("static/images/trainer/").getFile().getAbsolutePath();
             } catch (IOException e) {
                 e.printStackTrace();
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload image!");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Path not found!");
             }
-            newTrainer.setImage(ServletUriComponentsBuilder.fromCurrentContextPath().path("/images/trainer/"+ currTime +"_" + img.getOriginalFilename()).toUriString());
-        } else {
-            newTrainer.setImage("");
+            if (img != null) {
+                try {
+                    Files.copy(img.getInputStream(), Paths.get(Path + File.separator + currTime + "_" +  img.getOriginalFilename()),
+                    StandardCopyOption.REPLACE_EXISTING);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload image!");
+                }
+                newTrainer.setImage(ServletUriComponentsBuilder.fromCurrentContextPath().path("/images/trainer/"+ currTime +"_" + img.getOriginalFilename()).toUriString());
+            } else {
+                newTrainer.setImage("");
+            }
         }
+
 
         String result = trainerServices.createTrainer(newTrainer);
 
