@@ -9,6 +9,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
+import com.fitsta.fitsta.Entity.Orders;
 import com.fitsta.fitsta.Entity.Plans;
 import com.fitsta.fitsta.Entity.PlansPurchase;
 import com.fitsta.fitsta.Entity.Task;
@@ -106,7 +107,6 @@ public class FitstaApplication {
 			pp2.setEnrolleduser(u2);
 			// t1.setUsers(users);
 
-
 			List<Plans> plans = new ArrayList<>();
 			Plans p1 = new Plans(0, "Gravy Losser", "Weight Loss", "Money Back Gaureenty\nPremium Service\nDaily Diet Controll Remainder", 2599, 1, t1);
 			plans.add(p1);
@@ -114,6 +114,17 @@ public class FitstaApplication {
 
 			pp1.setEnrolledplan(p1);
 			pp2.setEnrolledplan(p1);
+
+
+			List<Orders> u1Orders = new ArrayList<>();
+			Orders o1 = new Orders(0, new java.sql.Date(dateFormat.parse("28/09/23").getTime()), 5000, u1);
+			u1Orders.add(o1);
+			u1.setOrders(u1Orders);
+
+			List<Orders> u2Orders = new ArrayList<>();
+			Orders o2 = new Orders(0, new java.sql.Date(dateFormat.parse("28/09/23").getTime()), 5000, u2);
+			u2Orders.add(o2);
+			u2.setOrders(u2Orders);
 
 
 			t1.setUsers(users);

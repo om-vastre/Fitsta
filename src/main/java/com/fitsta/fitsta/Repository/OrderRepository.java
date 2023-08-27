@@ -1,9 +1,9 @@
-// package com.fitsta.fitsta.Repository;
+package com.fitsta.fitsta.Repository;
 
-// import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.CrudRepository;
 
-// import com.fitsta.fitsta.Entity.Order;
+import com.fitsta.fitsta.Entity.Orders;
 
-// public interface OrderRepository extends CrudRepository<Order, Integer>{
+public interface OrderRepository extends CrudRepository<Orders, Integer>{
     
-// }
+}

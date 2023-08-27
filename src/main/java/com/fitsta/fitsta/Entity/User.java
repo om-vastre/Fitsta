@@ -39,10 +39,14 @@ public class User {
     @OneToMany(mappedBy = "taskUser", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Task> tasks = new ArrayList<>();
 
+    @OneToMany(mappedBy = "orderUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Orders> orders = new ArrayList<>();
 
+
+    
     public User(Integer id, String name, Date dob, String gender, String contactno, String address, Integer weight,
             Integer height, String username, String password, Trainer trainer, PlansPurchase userPlansPurchase,
-            List<Task> tasks) {
+            List<Task> tasks, List<Orders> orders) {
         this.id = id;
         this.name = name;
         this.dob = dob;
@@ -56,6 +60,7 @@ public class User {
         this.trainer = trainer;
         this.userPlansPurchase = userPlansPurchase;
         this.tasks = tasks;
+        this.orders = orders;
     }
 
     public User() {
@@ -165,7 +170,18 @@ public class User {
         this.tasks = tasks;
     }
 
-   
+    public List<Orders> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Orders> orders) {
+        this.orders = orders;
+    }
+
+    
+    
+    
+  
     // @ManyToOne
     // private Trainer trainer;
 
