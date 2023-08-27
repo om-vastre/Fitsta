@@ -121,6 +121,8 @@ public class FitstaApplication {
 			pro1.setName("MB Weight Gainer");
 			pro1.setImage1("/product/img1.jpg");
 			pro1.setImage2("/product/img2.jpg");
+			pro1.setImage3("/product/img3.jpg");
+			pro1.setImage4("/product/img4.jpg");
 			pro1.setDescription("Weight Gainer from Muscle Blaze containing carbos and other ingredients.");
 			pro1.setProductPrice("5000");
 			Product savedProduct = productRepository.save(pro1);

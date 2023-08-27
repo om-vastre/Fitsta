@@ -3,6 +3,10 @@ package com.fitsta.fitsta.Entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,6 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Product {
 
     @Id
@@ -20,19 +25,24 @@ public class Product {
     private String Name;
     private String Image1;
     private String Image2;
+    private String Image3;
+    private String Image4;
     private String Description;
     private String ProductPrice;
 
     @OneToMany(mappedBy = "orderProduct", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIdentityReference(alwaysAsId = true)
     private List<Orders> orders = new ArrayList<>();
 
     
-    public Product(Integer id, String name, String image1, String image2, String description, String productPrice,
-            List<Orders> orders) {
+    public Product(Integer id, String name, String image1, String image2, String image3, String image4,
+            String description, String productPrice, List<Orders> orders) {
         Id = id;
         Name = name;
         Image1 = image1;
         Image2 = image2;
+        Image3 = image3;
+        Image4 = image4;
         Description = description;
         ProductPrice = productPrice;
         this.orders = orders;
@@ -73,6 +83,22 @@ public class Product {
         Image2 = image2;
     }
 
+    public String getImage3() {
+        return Image3;
+    }
+
+    public void setImage3(String image3) {
+        Image3 = image3;
+    }
+
+    public String getImage4() {
+        return Image4;
+    }
+
+    public void setImage4(String image4) {
+        Image4 = image4;
+    }
+
     public String getDescription() {
         return Description;
     }
@@ -97,6 +123,6 @@ public class Product {
         this.orders = orders;
     }
 
-
+    
 
 }

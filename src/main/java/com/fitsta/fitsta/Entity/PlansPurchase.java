@@ -2,6 +2,10 @@ package com.fitsta.fitsta.Entity;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,6 +14,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class PlansPurchase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,9 +24,11 @@ public class PlansPurchase {
     private Date Expirydate;
 
     @OneToOne
+    @JsonIdentityReference(alwaysAsId = true)
     private User enrolleduser;
 
     @ManyToOne
+    @JsonIdentityReference(alwaysAsId = true)
     private Plans enrolledplan;
 
     

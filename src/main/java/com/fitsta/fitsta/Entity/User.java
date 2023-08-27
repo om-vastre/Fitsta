@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,6 +19,7 @@ import jakarta.persistence.OneToOne;
 
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,17 +36,20 @@ public class User {
     private String password;
 
     @ManyToOne
+    @JsonIdentityReference(alwaysAsId = true)
     private Trainer trainer;
 
     @OneToOne(mappedBy = "enrolleduser", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIdentityReference(alwaysAsId = true)
     private PlansPurchase userPlansPurchase;
 
     @OneToMany(mappedBy = "taskUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIdentityReference(alwaysAsId = true)
     private List<Task> tasks = new ArrayList<>();
 
     @OneToMany(mappedBy = "orderUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIdentityReference(alwaysAsId = true)
     private List<Orders> orders = new ArrayList<>();
-
 
     
     public User(Integer id, String name, Date dob, String gender, String contactno, String address, Integer weight,

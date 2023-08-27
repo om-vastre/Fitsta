@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,6 +16,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Trainer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,18 +33,20 @@ public class Trainer {
     private String password;
 
     @OneToMany(mappedBy = "trainer", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIdentityReference(alwaysAsId = true)
     private List<User> users = new ArrayList<>();
 
     @OneToMany(mappedBy = "planstrainer", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIdentityReference(alwaysAsId = true)
     private List<Plans> plans = new ArrayList<>();
 
     @OneToMany(mappedBy = "taskTrainer", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIdentityReference(alwaysAsId = true)
     private List<Task> tasks = new ArrayList<>();
 
     
     public Trainer(Integer id, String name, Date dob, String gender, String contactno, String image,
-            String specialization, String experience, String username, String password, List<User> users,
-            List<Plans> plans, List<Task> tasks) {
+            String specialization, String experience, String username, String password, List<User> users, List<Plans> plans, List<Task> tasks) {
         this.id = id;
         this.name = name;
         this.dob = dob;
