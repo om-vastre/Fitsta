@@ -4,11 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
@@ -27,8 +29,21 @@ public class Plans {
     @JsonIdentityReference(alwaysAsId = true)
     private Trainer planstrainer;
 
-    // @OneToMany
-    // private PlansPurchase plansPurchasedplans;
+
+    
+    public Plans(Integer id, String name, String type, String features, Integer price, Integer duration,
+            Trainer planstrainer) {
+        Id = id;
+        Name = name;
+        Type = type;
+        Features = features;
+        Price = price;
+        Duration = duration;
+        this.planstrainer = planstrainer;
+    }
+
+    public Plans() {
+    }
 
     public Integer getId() {
         return Id;
@@ -86,18 +101,9 @@ public class Plans {
         this.planstrainer = planstrainer;
     }
 
-    public Plans() {
-    }
+    // @OneToMany(mappedBy = "enrolledplan", cascade = CascadeType.ALL, orphanRemoval = true)
+    // private PlansPurchase plansPurchasedplans;
 
-    public Plans(Integer id, String name, String type, String features, Integer price, Integer duration,
-            Trainer planstrainer) {
-        Id = id;
-        Name = name;
-        Type = type;
-        Features = features;
-        Price = price;
-        Duration = duration;
-        this.planstrainer = planstrainer;
-    }
     
+
 }
