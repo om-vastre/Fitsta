@@ -31,7 +31,6 @@ public class PlansPurchase {
     @JsonIdentityReference(alwaysAsId = true)
     private Plans enrolledplan;
 
-    
     public PlansPurchase(Integer id, Date purchasedate, Date expirydate, User enrolleduser, Plans enrolledplan) {
         Id = id;
         Purchasedate = purchasedate;

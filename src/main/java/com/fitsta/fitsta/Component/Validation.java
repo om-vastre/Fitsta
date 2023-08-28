@@ -102,5 +102,27 @@ public class Validation {
         }
     }
 
+    public boolean isValidPlansPurchase(String token){
+        if (token != null) {
+            List<Logins> foundLogin = this.loginsRepository.findAllByToken(token);
+            if(foundLogin.isEmpty()){
+                System.out.println("\n Authentication Error : Empty login!");
+                return false;
+            }
+            else{
+                if(foundLogin.get(0).getType().equals("user") || foundLogin.get(0).getType().equals("admin")){
+                    return true;
+                }
+                else{
+                    System.out.println("\n Authentication Error : Invalid user login!");
+                    return false;
+                }
+            }
+        } else {
+            System.out.println("\nAuthentication Error : Token not received!");
+            return false;
+        }
+    }
+
 
 }
