@@ -44,7 +44,6 @@ public class Trainer {
     @JsonIdentityReference(alwaysAsId = true)
     private List<Task> tasks = new ArrayList<>();
 
-    
     public Trainer(Integer id, String name, Date dob, String gender, String contactno, String image, String specialization, String experience, String username, String password, List<User> users, List<Plans> plans, List<Task> tasks) {
         this.id = id;
         this.name = name;
