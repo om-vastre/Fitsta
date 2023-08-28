@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fitsta.fitsta.Entity.Plans;
+import com.fitsta.fitsta.Entity.PlansPurchase;
+import com.fitsta.fitsta.Repository.PlansPurchaseRepository;
 import com.fitsta.fitsta.Repository.PlansRepository;
 import com.fitsta.fitsta.Repository.TrainerRepository;
 
@@ -19,6 +21,9 @@ public class PlansServices {
 
     @Autowired
     private TrainerRepository trainerRepository;
+
+    @Autowired
+    private PlansPurchaseRepository plansPurchaseRepository;
 
 
     public String createPlan(Plans newPlan){
@@ -41,15 +46,26 @@ public class PlansServices {
     }
 
 
-    public String deletePlan(Integer id){
-        Optional<Plans> plans = plansRepository.findById(id);
-        if(plans.isPresent()){
-            plansRepository.delete(plans.get());
+    public String deletePlans(Integer id) {
+
+        Optional<Plans> foundPlan = this.plansRepository.findById(id);
+    
+        if (foundPlan.isPresent()) {
+            List<PlansPurchase> allPurchases = foundPlan.get().getPlansPurchasedplans();
+    
+            for (PlansPurchase eachPlansPurchase : allPurchases) {
+                eachPlansPurchase.setEnrolledplan(null); // Remove the reference to the plan
+                this.plansPurchaseRepository.delete(eachPlansPurchase);
+            }
+    
+            plansRepository.delete(foundPlan.get());
             return ("Success");
-        }else{
+        } else {
             return ("Plan Not Found!");
         }
     }
+    
+
 
 
     public List<Plans> listPlans(){

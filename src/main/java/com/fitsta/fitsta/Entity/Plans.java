@@ -1,5 +1,8 @@
 package com.fitsta.fitsta.Entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -29,10 +32,14 @@ public class Plans {
     @JsonIdentityReference(alwaysAsId = true)
     private Trainer planstrainer;
 
+    @OneToMany(mappedBy = "enrolledplan", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIdentityReference(alwaysAsId = true)
+    private List<PlansPurchase> plansPurchasedplans = new ArrayList<>();
+
 
     
     public Plans(Integer id, String name, String type, String features, Integer price, Integer duration,
-            Trainer planstrainer) {
+            Trainer planstrainer, List<PlansPurchase> plansPurchasedplans) {
         Id = id;
         Name = name;
         Type = type;
@@ -40,6 +47,7 @@ public class Plans {
         Price = price;
         Duration = duration;
         this.planstrainer = planstrainer;
+        this.plansPurchasedplans = plansPurchasedplans;
     }
 
     public Plans() {
@@ -101,9 +109,14 @@ public class Plans {
         this.planstrainer = planstrainer;
     }
 
-    // @OneToMany(mappedBy = "enrolledplan", cascade = CascadeType.ALL, orphanRemoval = true)
-    // private PlansPurchase plansPurchasedplans;
+    public List<PlansPurchase> getPlansPurchasedplans() {
+        return plansPurchasedplans;
+    }
 
-    
+    public void setPlansPurchasedplans(List<PlansPurchase> plansPurchasedplans) {
+        this.plansPurchasedplans = plansPurchasedplans;
+    }
+
+
 
 }

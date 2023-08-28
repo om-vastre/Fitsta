@@ -30,7 +30,7 @@ public class UserController {
     private Validation validation;
 
     @PostMapping("/create")
-    public ResponseEntity<String> createUser(@RequestBody CreateUserRequest recUser, @RequestHeader(name = "Token", required = true) String token){
+    public ResponseEntity<String> createUser(@RequestBody CreateUserRequest recUser){
 
         // if(!validation.isValidUser(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
 

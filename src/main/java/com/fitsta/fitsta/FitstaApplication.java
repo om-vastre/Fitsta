@@ -109,8 +109,12 @@ public class FitstaApplication {
 			pp2.setEnrolleduser(u2);
 			// t1.setUsers(users);
 
+			List<PlansPurchase> plansPurchases = new ArrayList<>();
+			plansPurchases.add(pp1);
+			plansPurchases.add(pp2);
+
 			List<Plans> plans = new ArrayList<>();
-			Plans p1 = new Plans(0, "Gravy Losser", "Weight Loss", "Money Back Gaureenty\nPremium Service\nDaily Diet Controll Remainder", 2599, 1, t1);
+			Plans p1 = new Plans(0, "Gravy Losser", "Weight Loss", "Money Back Gaureenty\nPremium Service\nDaily Diet Controll Remainder", 2599, 1, t1, plansPurchases);
 			plans.add(p1);
 			t1.setPlans(plans);
 

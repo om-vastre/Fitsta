@@ -40,7 +40,7 @@ public class PlansController {
         // if(!validation.isValidPlans(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
 
         Trainer tempTrainer = this.trainerRepository.findById(recPlan.getPlanstrainer()).get();
-        Plans newPlans = new Plans(recPlan.getId(), recPlan.getName(), recPlan.getType(), recPlan.getFeatures(), recPlan.getPrice(), recPlan.getDuration(),  tempTrainer);
+        Plans newPlans = new Plans(recPlan.getId(), recPlan.getName(), recPlan.getType(), recPlan.getFeatures(), recPlan.getPrice(), recPlan.getDuration(),  tempTrainer, null);
 
         String result = this.plansServices.createPlan(newPlans);
 
@@ -74,7 +74,7 @@ public class PlansController {
 
         // if(!validation.isValidPlans(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
         
-        String result = this.plansServices.deletePlan(id);
+        String result = this.plansServices.deletePlans(id);
 
         if(result.equals("Success")){
             return ResponseEntity.status(HttpStatus.OK).body("Plans deleted successfully.");
