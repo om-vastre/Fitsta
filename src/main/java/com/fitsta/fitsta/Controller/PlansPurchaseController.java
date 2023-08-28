@@ -51,16 +51,16 @@ public class PlansPurchaseController {
 
 
     @PostMapping("/create")
-    public ResponseEntity<String> createPlansPurchase(@RequestBody CreatePlansPurchaseRequest newPlansPurchaseRequest, @RequestHeader(name = "Token", required = true) String token){
+    public ResponseEntity<String> createPlansPurchase(@RequestBody CreatePlansPurchaseRequest newPlansPurchaseRequest){
 
         // if(!validation.isValidPlansPurchase(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
 
         try {
             PlansPurchase newPlansPurchase = new PlansPurchase();
             newPlansPurchase.setId(newPlansPurchaseRequest.getId());
-            Date purchasedate = new SimpleDateFormat("dd-MM-yy").parse(newPlansPurchaseRequest.getPurchasedate());
+            Date purchasedate = new SimpleDateFormat("dd/MM/yy").parse(newPlansPurchaseRequest.getPurchasedate());
             newPlansPurchase.setPurchasedate(purchasedate);
-            Date expiryDate = new SimpleDateFormat("dd-MM-yy").parse(newPlansPurchaseRequest.getExpirydate());
+            Date expiryDate = new SimpleDateFormat("dd/MM/yy").parse(newPlansPurchaseRequest.getExpirydate());
             newPlansPurchase.setExpirydate(expiryDate);
             newPlansPurchase.setEnrolleduser(this.userRepository.findById(newPlansPurchaseRequest.getEnrolleduserId()).get());
             newPlansPurchase.setEnrolledplan(this.plansRepository.findById(newPlansPurchaseRequest.getEnrolledplanId()).get());

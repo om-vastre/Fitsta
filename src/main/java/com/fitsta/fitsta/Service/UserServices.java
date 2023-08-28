@@ -46,10 +46,10 @@ public class UserServices {
 
     public String createUser(User newUser){
         try {
-            this.userRepository.save(newUser);
-            return "Success";
+            return this.userRepository.save(newUser).getId()+"";
         } catch (Exception e) {
-            return e.getMessage();
+            System.out.println("Error while creating user : "+e.getMessage());
+            return "Error";
         }
     }
 

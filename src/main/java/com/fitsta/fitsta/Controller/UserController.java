@@ -48,8 +48,8 @@ public class UserController {
 
         String result = userServices.createUser(newUser);
 
-        if(result.equals("Success")){
-            return ResponseEntity.status(HttpStatus.OK).body("{\"Success\":\"Operation successful.\"}");
+        if(!result.equals("Error")){
+            return ResponseEntity.ok().body("{\"message\" : \"Operation successful\", \"id\": " + result + "}");
         }
         else{
             System.out.println("Error while new user creation : " + result);
