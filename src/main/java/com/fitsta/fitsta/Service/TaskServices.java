@@ -49,7 +49,7 @@ public class TaskServices {
             User taskUser = this.userRepository.findById(requestTask.getTaskUser()).orElse(null);
             newTask.setTaskUser(taskUser);
     
-            Date workoutdate = new SimpleDateFormat("dd/MM/yy").parse(requestTask.getWorkoutDate());
+            Date workoutdate = new SimpleDateFormat("dd-MM-yyyy").parse(requestTask.getWorkoutDate());
             newTask.setWorkoutDate(workoutdate);
 
             this.taskRepository.save(newTask);
