@@ -55,7 +55,7 @@ public class PlansController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<Plans> getPlan(@PathVariable("id") Integer id, @RequestHeader(name = "Token", required = true) String token) {
+    public ResponseEntity<Plans> getPlan(@PathVariable("id") Integer id) {
 
         // if(!validation.isValidPlans(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
 
@@ -85,7 +85,7 @@ public class PlansController {
 
 
     @GetMapping("/list")
-    public ResponseEntity<List<Plans>> listPlanss(@RequestHeader(name = "Token", required = true) String token){
+    public ResponseEntity<List<Plans>> listPlanss(){
 
         // if(!validation.isValidPlans(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
 

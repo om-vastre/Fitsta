@@ -24,15 +24,16 @@ public class TrainerServices {
 
 
     public String[] login(String username, String pass){
-        List<Trainer> trainer = this.trainerRepository.findByUsernameAndPassword(username, pass);
-        String[] data = new String[2];
-        if (trainer != null && !trainer.isEmpty()){
-            
-            data[0]=""+trainer.get(0).getId();
-            data[1]="Success";
+        Trainer trainer = this.trainerRepository.findByUsernameAndPassword(username, pass);
+        String[] data = new String[3];
+        if (trainer != null){
+            data[0]=""+trainer.getId();
+            data[1]="trainer";
+            data[2]="Success";
             return data;
         }else{
             data[0]="";
+            data[1]="";
             data[1]="failed";
             return data;
         }

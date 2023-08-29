@@ -31,14 +31,16 @@ public class UserServices {
 
     public String[] login(String username, String pass) {
         List<User> user = this.userRepository.findByUsernameAndPassword(username, pass);
-        String[] data = new String[2];
+        String[] data = new String[3];
         if (user != null && !user.isEmpty()) {
-            data[0] = "" + user.get(0).getId();
-            data[1] = "Success";
+            data[0]=""+user.get(0).getId();
+            data[1]="user";
+            data[2]="Success";
             return data;
         } else {
-            data[0] = "";
-            data[1] = "failed";
+            data[0]="";
+            data[1]="";
+            data[1]="failed";
             return data;
         }
     }

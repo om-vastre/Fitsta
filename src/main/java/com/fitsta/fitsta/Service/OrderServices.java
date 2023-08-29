@@ -14,7 +14,6 @@ import com.fitsta.fitsta.Entity.Product;
 import com.fitsta.fitsta.Entity.User;
 import com.fitsta.fitsta.Repository.OrderRepository;
 import com.fitsta.fitsta.Repository.ProductRepository;
-import com.fitsta.fitsta.Repository.TrainerRepository;
 import com.fitsta.fitsta.Repository.UserRepository;
 
 @Service
@@ -46,7 +45,7 @@ public class OrderServices {
             Product orderProduct = this.productRepository.findById(requestOrder.getOrderProduct()).orElse(null);
             newOrder.setOrderProduct(orderProduct);
     
-            Date orderdate = new SimpleDateFormat("dd/MM/yy").parse(requestOrder.getOrderDate());
+            Date orderdate = new SimpleDateFormat("dd/MM/yyyy").parse(requestOrder.getOrderDate());
             newOrder.setOrderDate(orderdate);
 
             this.orderRepository.save(newOrder);

@@ -8,6 +8,5 @@ import com.fitsta.fitsta.Entity.Trainer;
 
 public interface TrainerRepository extends CrudRepository<Trainer, Integer>{
 
-    public List<Trainer> findByUsernameAndPassword(String username, String password);
-    
+    Trainer findByUsernameAndPassword(String username, String password);
 }
