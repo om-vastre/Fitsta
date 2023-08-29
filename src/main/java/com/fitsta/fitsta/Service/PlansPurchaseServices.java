@@ -30,7 +30,16 @@ public class PlansPurchaseServices {
 
     public String createPlansPurchase(PlansPurchase newPlansPurchase){
         try {
-            this.plansPurchaseRepository.save(newPlansPurchase);
+            PlansPurchase savedPP = this.plansPurchaseRepository.save(newPlansPurchase);
+            
+            User tosaveUser = this.userRepository.findById(newPlansPurchase.getEnrolleduser().getId()).get();
+            tosaveUser.setUserPlansPurchase(savedPP);
+
+            tosaveUser.setTrainer(savedPP.getEnrolledplan().getPlanstrainer());
+    
+            this.userRepository.save(tosaveUser);
+
+
             return "Success";
         } catch (Exception e) {
             return e.getMessage();
