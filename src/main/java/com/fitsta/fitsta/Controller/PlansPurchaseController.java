@@ -50,7 +50,7 @@ public class PlansPurchaseController {
     }
 
 
-    @PostMapping("/create")
+    @PutMapping("/create")
     public ResponseEntity<String> createPlansPurchase(@RequestBody CreatePlansPurchaseRequest newPlansPurchaseRequest){
 
         // if(!validation.isValidPlansPurchase(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}

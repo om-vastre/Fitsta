@@ -1,5 +1,8 @@
 package com.fitsta.fitsta.Controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fitsta.fitsta.Component.Validation;
 import com.fitsta.fitsta.DTO.CreateUserRequest;
+import com.fitsta.fitsta.DTO.UpdateUserRequest;
 import com.fitsta.fitsta.Entity.User;
 import com.fitsta.fitsta.Service.UserServices;
 
@@ -34,19 +38,43 @@ public class UserController {
 
         // if(!validation.isValidUser(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
 
-        User newUser = new User();
-        newUser.setId(recUser.getId());
-        newUser.setName(recUser.getName());
-        newUser.setDob(recUser.getDob());
-        newUser.setGender(recUser.getGender());
-        newUser.setContactno(recUser.getContactno());
-        newUser.setAddress(recUser.getAddress());
-        newUser.setWeight(recUser.getWeight());
-        newUser.setHeight(recUser.getHeight());
-        newUser.setUsername(recUser.getUsername());
-        newUser.setPassword(recUser.getPassword());
+        try {
+            User newUser = new User();
+            newUser.setId(recUser.getId());
+            newUser.setName(recUser.getName());
+            Date purchasedate = new SimpleDateFormat("dd-MM-yyyy").parse(recUser.getDob());
+            newUser.setDob(purchasedate);
+            newUser.setGender(recUser.getGender());
+            newUser.setContactno(recUser.getContactno());
+            newUser.setAddress(recUser.getAddress());
+            newUser.setWeight(recUser.getWeight());
+            newUser.setHeight(recUser.getHeight());
+            newUser.setUsername(recUser.getUsername());
+            newUser.setPassword(recUser.getPassword());
+    
+            String result = userServices.createUser(newUser);
+    
+            if(!result.equals("Error")){
+                return ResponseEntity.ok().body("{\"message\" : \"Operation successful\", \"id\": " + result + "}");
+            }
+            else{
+                System.out.println("Error while new user creation : " + result);
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"Error\":\"Failed to create new user!\"}");
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+            System.out.println("Error while new user creation : Invalid DOB");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"Error\":\"Invalid DOB!\"}");
+        }
+    }
 
-        String result = userServices.createUser(newUser);
+
+    @PostMapping("/update")
+    public ResponseEntity<String> updateUser(@RequestBody UpdateUserRequest recUser){
+
+        // if(!validation.isValidUser(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
+
+        String result = userServices.updateUser(recUser);
 
         if(!result.equals("Error")){
             return ResponseEntity.ok().body("{\"message\" : \"Operation successful\", \"id\": " + result + "}");

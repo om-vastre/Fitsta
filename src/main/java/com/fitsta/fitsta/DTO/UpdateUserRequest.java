@@ -1,9 +1,9 @@
 package com.fitsta.fitsta.DTO;
 
 import java.util.Date;
+import java.util.List;
 
-public class CreateUserRequest {
-
+public class UpdateUserRequest {
     private Integer id;
     private String name;
     private String dob;
@@ -15,6 +15,10 @@ public class CreateUserRequest {
     private String username;
     private String password;
 
+    private Integer trainer;
+    private Integer userPlansPurchase;
+    private List<Integer> tasks;
+    private List<Integer> orders;
 
     public Integer getId() {
         return id;
@@ -75,6 +79,30 @@ public class CreateUserRequest {
     }
     public void setPassword(String password) {
         this.password = password;
+    }
+    public Integer getTrainer() {
+        return trainer;
+    }
+    public void setTrainer(Integer trainer) {
+        this.trainer = trainer;
+    }
+    public Integer getUserPlansPurchase() {
+        return userPlansPurchase;
+    }
+    public void setUserPlansPurchase(Integer userPlansPurchase) {
+        this.userPlansPurchase = userPlansPurchase;
+    }
+    public List<Integer> getTasks() {
+        return tasks;
+    }
+    public void setTasks(List<Integer> tasks) {
+        this.tasks = tasks;
+    }
+    public List<Integer> getOrders() {
+        return orders;
+    }
+    public void setOrders(List<Integer> orders) {
+        this.orders = orders;
     }
 
 

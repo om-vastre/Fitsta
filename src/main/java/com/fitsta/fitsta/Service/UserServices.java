@@ -1,17 +1,25 @@
 package com.fitsta.fitsta.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.fitsta.fitsta.DTO.UpdateUserRequest;
 import com.fitsta.fitsta.Entity.Orders;
+import com.fitsta.fitsta.Entity.PlansPurchase;
 import com.fitsta.fitsta.Entity.Task;
+import com.fitsta.fitsta.Entity.Trainer;
 import com.fitsta.fitsta.Entity.User;
 import com.fitsta.fitsta.Repository.OrderRepository;
 import com.fitsta.fitsta.Repository.PlansPurchaseRepository;
 import com.fitsta.fitsta.Repository.TaskRepository;
+import com.fitsta.fitsta.Repository.TrainerRepository;
 import com.fitsta.fitsta.Repository.UserRepository;
 
 @Service
@@ -28,6 +36,10 @@ public class UserServices {
 
     @Autowired
     private PlansPurchaseRepository plansPurchaseRepository;
+
+    @Autowired
+    private TrainerRepository trainerRepository;
+
 
     public String[] login(String username, String pass) {
         List<User> user = this.userRepository.findByUsernameAndPassword(username, pass);
@@ -51,6 +63,64 @@ public class UserServices {
             return this.userRepository.save(newUser).getId()+"";
         } catch (Exception e) {
             System.out.println("Error while creating user : "+e.getMessage());
+            return "Error";
+        }
+    }
+
+    public String updateUser(UpdateUserRequest recUser){
+        User existingUser = this.userRepository.findById(recUser.getId()).orElse(null);
+        if (existingUser == null) {
+            System.out.println("\nError while updating user : User not found!");
+            return "Error";
+        }
+
+        try {
+            existingUser.setId(recUser.getId());
+            existingUser.setName(recUser.getName());
+            Date purchasedate = new SimpleDateFormat("dd-MM-yyyy").parse(recUser.getDob());
+            existingUser.setDob(purchasedate);
+            existingUser.setGender(recUser.getGender());
+            existingUser.setContactno(recUser.getContactno());
+            existingUser.setAddress(recUser.getAddress());
+            existingUser.setWeight(recUser.getWeight());
+            existingUser.setHeight(recUser.getHeight());
+            existingUser.setUsername(recUser.getUsername());
+            existingUser.setPassword(recUser.getPassword());
+    
+            // Updating trainer
+            Trainer newTrainer = this.trainerRepository.findById(recUser.getTrainer()).orElse(null);
+            existingUser.setTrainer(newTrainer);
+    
+            // Updating plan purchase
+            PlansPurchase newUserPlansPurchase = this.plansPurchaseRepository.findById(recUser.getUserPlansPurchase()).orElse(null);
+            existingUser.setUserPlansPurchase(newUserPlansPurchase);
+    
+            // Updating tasks
+            existingUser.getTasks().clear();
+            for (Integer taskId : recUser.getTasks()) {
+                Task task = this.taskRepository.findById(taskId).orElse(null);
+                if (task != null) {
+                    existingUser.getTasks().add(task);
+                }
+            }
+    
+            // Updating orders
+            existingUser.getOrders().clear();
+            for (Integer orderId : recUser.getOrders()) {
+                Orders order = this.orderRepository.findById(orderId).orElse(null);
+                if (order != null) {
+                    existingUser.getOrders().add(order);
+                }
+            }
+    
+            try {
+                return this.userRepository.save(existingUser).getId()+"";
+            } catch (Exception e) {
+                System.out.println("Error while updating user : "+e.getMessage());
+                return "Error";
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
             return "Error";
         }
     }
