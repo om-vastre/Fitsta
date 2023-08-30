@@ -43,16 +43,18 @@ public class UserServices {
 
     public String[] login(String username, String pass) {
         List<User> user = this.userRepository.findByUsernameAndPassword(username, pass);
-        String[] data = new String[3];
+        String[] data = new String[4];
         if (user != null && !user.isEmpty()) {
             data[0]=""+user.get(0).getId();
-            data[1]="user";
-            data[2]="Success";
+            data[1]=""+user.get(0).getUsername();
+            data[2]="user";
+            data[3]="Success";
             return data;
         } else {
             data[0]="";
             data[1]="";
-            data[1]="failed";
+            data[2]="";
+            data[3]="failed";
             return data;
         }
     }

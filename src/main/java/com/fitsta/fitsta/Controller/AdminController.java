@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fitsta.fitsta.Component.EmailSender;
 import com.fitsta.fitsta.Entity.Logins;
 import com.fitsta.fitsta.Repository.LoginsRepository;
 import com.fitsta.fitsta.Service.AdminServices;
@@ -55,21 +56,21 @@ public class AdminController {
         if(!result[0].equals("")){
             String token = generateToken(16);
             this.loginsRepository.save(new Logins(0, result[1], null, token));
-            return ResponseEntity.ok().body("{\"message\" : \"success\",\"token\" : \""+ token +"\",\"type\" : \""+result[1]+"\",\"id\" : "+result[0]+"}");
+            return ResponseEntity.ok().body("{\"message\" : \"Success\", \"token\" : \"" + token + "\", \"type\" : \"" + result[2] + "\", \"id\" : " + result[0] + ", \"OTP\" : \"" + EmailSender.sendOTP(result[1]) + "\"}");
         }
 
         result = this.trainerServices.login(username, password);
         if(!result[0].equals("")){
             String token = generateToken(16);
             this.loginsRepository.save(new Logins(0, result[1], null, token));
-            return ResponseEntity.ok().body("{\"message\" : \"success\",\"token\" : \""+ token +"\",\"type\" : \""+result[1]+"\",\"id\" : "+result[0]+"}");
+            return ResponseEntity.ok().body("{\"message\" : \"Success\", \"token\" : \"" + token + "\", \"type\" : \"" + result[2] + "\", \"id\" : " + result[0] + ", \"OTP\" : \"" + EmailSender.sendOTP(result[1]) + "\"}");
         }
 
         result = this.userServices.login(username, password);
         if(!result[0].equals("")){
             String token = generateToken(16);
             this.loginsRepository.save(new Logins(0, result[1], null, token));
-            return ResponseEntity.ok().body("{\"message\" : \"success\",\"token\" : \""+ token +"\",\"type\" : \""+result[1]+"\",\"id\" : "+result[0]+"}");
+            return ResponseEntity.ok().body("{\"message\" : \"Success\", \"token\" : \"" + token + "\", \"type\" : \"" + result[2] + "\", \"id\" : " + result[0] + ", \"OTP\" : \"" + EmailSender.sendOTP(result[1]) + "\"}");
         }
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("{\"message\":\"Invalid Credentials\"");

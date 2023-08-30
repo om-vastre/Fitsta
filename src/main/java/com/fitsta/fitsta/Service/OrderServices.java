@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fitsta.fitsta.Component.EmailSender;
 import com.fitsta.fitsta.DTO.CreateOrderRequest;
 import com.fitsta.fitsta.Entity.Orders;
 import com.fitsta.fitsta.Entity.Product;
@@ -48,7 +49,9 @@ public class OrderServices {
             Date orderdate = new SimpleDateFormat("dd/MM/yyyy").parse(requestOrder.getOrderDate());
             newOrder.setOrderDate(orderdate);
 
-            this.orderRepository.save(newOrder);
+            Orders savedOrder = this.orderRepository.save(newOrder);
+
+            EmailSender.sendOrderInvoice(savedOrder);
 
             return "Success";
         } catch (Exception e) {
