@@ -57,21 +57,21 @@ public class AdminController {
         result = this.adminServices.adminLogin(username, password);
         if(!result[0].equals("")){
             String token = generateToken(16);
-            this.loginsRepository.save(new Logins(0, result[1], null, token));
+            this.loginsRepository.save(new Logins(0, result[2], null, token));
             return ResponseEntity.ok().body("{\"message\" : \"Success\", \"token\" : \"" + token + "\", \"type\" : \"" + result[2] + "\", \"id\" : " + result[0] + ", \"OTP\" : \"" + EmailSender.sendOTP(result[1]) + "\"}");
         }
 
         result = this.trainerServices.login(username, password);
         if(!result[0].equals("")){
             String token = generateToken(16);
-            this.loginsRepository.save(new Logins(0, result[1], null, token));
+            this.loginsRepository.save(new Logins(0, result[2], null, token));
             return ResponseEntity.ok().body("{\"message\" : \"Success\", \"token\" : \"" + token + "\", \"type\" : \"" + result[2] + "\", \"id\" : " + result[0] + ", \"OTP\" : \"" + EmailSender.sendOTP(result[1]) + "\"}");
         }
 
         result = this.userServices.login(username, password);
         if(!result[0].equals("")){
             String token = generateToken(16);
-            this.loginsRepository.save(new Logins(0, result[1], null, token));
+            this.loginsRepository.save(new Logins(0, result[2], null, token));
             return ResponseEntity.ok().body("{\"message\" : \"Success\", \"token\" : \"" + token + "\", \"type\" : \"" + result[2] + "\", \"id\" : " + result[0] + ", \"OTP\" : \"" + EmailSender.sendOTP(result[1]) + "\"}");
         }
 
@@ -100,4 +100,5 @@ public class AdminController {
         EmailSender.contactUsMail(newRequest);
         return ResponseEntity.ok("Request Send");
     }
+
 }

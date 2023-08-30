@@ -54,7 +54,7 @@ public class ProductController {
         @RequestParam("ProductPrice") String productPrice,
         @RequestHeader(name = "Token", required = true) String token){
 
-        // if(!validation.isValidProduct(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
+        if(!validation.isValidProduct(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
 
         Product newProduct = new Product();
         newProduct.setId(id);
@@ -147,7 +147,7 @@ public class ProductController {
         @RequestBody UpdateProductRequest recProduct,
         @RequestHeader(name = "Token", required = true) String token){
 
-        // if(!validation.isValidProduct(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
+        if(!validation.isValidProduct(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
 
         String result = productServices.updateProduct(recProduct);
 
@@ -165,8 +165,6 @@ public class ProductController {
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProduct(@PathVariable("id") Integer id) {
 
-        // if(!validation.isValidProduct(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
-
         Product gotProduct = this.productServices.getProduct(id);
         if (gotProduct != null){
             return ResponseEntity.ok(gotProduct);
@@ -180,7 +178,7 @@ public class ProductController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteProduct(@PathVariable("id") Integer id, @RequestHeader(name = "Token", required = true) String token){
 
-        // if(!validation.isValidProduct(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
+        if(!validation.isValidProduct(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
         
         String result = this.productServices.deleteProduct(id);
 
@@ -194,7 +192,6 @@ public class ProductController {
 
     @GetMapping("/list")
     public ResponseEntity<List<Product>> listProducts(){
-        // if(!validation.isValidProduct(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
         List<Product> productsList = this.productServices.listProducts();
         if(productsList != null){
             return ResponseEntity.ok(productsList);

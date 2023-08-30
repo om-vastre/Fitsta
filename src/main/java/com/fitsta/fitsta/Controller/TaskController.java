@@ -35,7 +35,7 @@ public class TaskController {
     @GetMapping("/{id}")
     public ResponseEntity<Task> get(@PathVariable("id") Integer id, @RequestHeader(name = "Token", required = true) String token){
 
-        // if(!validation.isValidTask(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
+        if(!validation.isValidTask(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
 
         Task found = this.taskServices.getTask(id);
         if(found != null){
@@ -50,7 +50,7 @@ public class TaskController {
     @PostMapping("/create")
     public ResponseEntity<String> createTask(@RequestBody CreateTaskRequest requestTask, @RequestHeader(name = "Token", required = true) String token){
 
-        // if(!validation.isValidTask(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
+        if(!validation.isValidTask(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
 
         String result = taskServices.createTask(requestTask);
 
@@ -67,7 +67,7 @@ public class TaskController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteTask(@PathVariable("id") Integer id, @RequestHeader(name = "Token", required = true) String token){
 
-        // if(!validation.isValidTask(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
+        if(!validation.isValidTask(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
         
         String result = this.taskServices.deleteTask(id);
 
@@ -82,7 +82,7 @@ public class TaskController {
     @GetMapping("/list")
     public ResponseEntity<List<Task>> listTasks(@RequestHeader(name = "Token", required = true) String token){
 
-        // if(!validation.isValidTask(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
+        if(!validation.isValidTask(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
 
         List<Task> tasksList = this.taskServices.listTasks();
         if(tasksList != null){
@@ -96,7 +96,7 @@ public class TaskController {
     @GetMapping("/list/user/{id}")
     public ResponseEntity<List<Task>> listTasksByUser(@PathVariable("id") Integer id, @RequestHeader(name = "Token", required = true) String token){
 
-        // if(!validation.isValidTask(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
+        if(!validation.isValidTask(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
 
         List<Task> tasksList = this.taskServices.listTasksByUser(id);
         if(tasksList != null){
@@ -110,7 +110,7 @@ public class TaskController {
     @GetMapping("/list/trainer/{id}")
     public ResponseEntity<List<Task>> listTasksByTrainer(@PathVariable("id") Integer id, @RequestHeader(name = "Token", required = true) String token){
 
-        // if(!validation.isValidTask(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
+        if(!validation.isValidTask(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
 
         List<Task> tasksList = this.taskServices.listTasksByTrainer(id);
         if(tasksList != null){

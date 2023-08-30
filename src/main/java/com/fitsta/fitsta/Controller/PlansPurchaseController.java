@@ -44,7 +44,9 @@ public class PlansPurchaseController {
 
     @GetMapping("/{id}")
     public ResponseEntity<PlansPurchase> getPlansPurchase(@PathVariable("id") Integer id, @RequestHeader(name = "Token", required = true) String token){
-        // if(!validation.isValidPlansPurchase(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
+        
+        if(!validation.isValidPlansPurchase(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
+        
         PlansPurchase gotPlansPurchase = this.plansPurchaseServices.getPlansPurchase(id);
         if (gotPlansPurchase != null){return ResponseEntity.ok(gotPlansPurchase);}
         else{return  ResponseEntity.status(HttpStatus.NOT_FOUND).build();}
@@ -53,8 +55,6 @@ public class PlansPurchaseController {
 
     @PostMapping("/create")
     public ResponseEntity<String> createPlansPurchase(@RequestBody CreatePlansPurchaseRequest newPlansPurchaseRequest){
-
-        // if(!validation.isValidPlansPurchase(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
 
         try {
             PlansPurchase newPlansPurchase = new PlansPurchase();
@@ -85,7 +85,7 @@ public class PlansPurchaseController {
     @PutMapping("/update")
     public ResponseEntity<String> updatePlansPurchase(@RequestBody CreatePlansPurchaseRequest newPlansPurchaseRequest, @RequestHeader(name = "Token", required = true) String token){
 
-        // if(!validation.isValidPlansPurchase(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
+        if(!validation.isValidPlansPurchase(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
 
         String result = this.plansPurchaseServices.updatePlansPurchase(newPlansPurchaseRequest);
         if(result.equals("Success")){
@@ -101,7 +101,7 @@ public class PlansPurchaseController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletePlansPurchase(@PathVariable("id") Integer id, @RequestHeader(name = "Token", required = true) String token){
 
-        // if(!validation.isValidPlansPurchase(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
+        if(!validation.isValidPlansPurchase(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
         
         String result = this.plansPurchaseServices.deletePlansPurchase(id);
 
@@ -116,7 +116,7 @@ public class PlansPurchaseController {
     @GetMapping("/list")
     public ResponseEntity<List<PlansPurchase>> listPlansPurchases(@RequestHeader(name = "Token", required = true) String token){
 
-        // if(!validation.isValidPlansPurchase(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
+        if(!validation.isValidPlansPurchase(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
 
         List<PlansPurchase> plansPurchasesList = this.plansPurchaseServices.listPlansPurchases();
         if(plansPurchasesList != null){return ResponseEntity.ok(plansPurchasesList);}

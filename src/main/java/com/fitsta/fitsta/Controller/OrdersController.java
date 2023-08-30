@@ -33,7 +33,7 @@ public class OrdersController {
     @GetMapping("/{id}")
     public ResponseEntity<Orders> get(@PathVariable("id") Integer id, @RequestHeader(name = "Token", required = true) String token){
 
-        // if(!validation.isValidOrder(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
+        if(!validation.isValidOrder(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
 
         Orders found = this.orderServices.getOrder(id);
         if(found != null){
@@ -48,7 +48,7 @@ public class OrdersController {
     @PostMapping("/create")
     public ResponseEntity<String> createOrder(@RequestBody CreateOrderRequest requestOrder, @RequestHeader(name = "Token", required = true) String token){
 
-        // if(!validation.isValidOrder(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
+        if(!validation.isValidOrder(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
 
         String result = orderServices.createOrder(requestOrder);
 
@@ -65,7 +65,7 @@ public class OrdersController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteOrder(@PathVariable("id") Integer id, @RequestHeader(name = "Token", required = true) String token){
 
-        // if(!validation.isValidOrder(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
+        if(!validation.isValidOrder(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
         
         String result = this.orderServices.deleteOrder(id);
 
@@ -80,7 +80,7 @@ public class OrdersController {
     @GetMapping("/list")
     public ResponseEntity<List<Orders>> listOrders(@RequestHeader(name = "Token", required = true) String token){
 
-        // if(!validation.isValidOrder(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
+        if(!validation.isValidOrder(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
 
         List<Orders> ordersList = this.orderServices.listOrders();
         if(ordersList != null){
@@ -94,7 +94,7 @@ public class OrdersController {
     @GetMapping("/list/user/{id}")
     public ResponseEntity<List<Orders>> listOrdersByUser(@PathVariable("id") Integer id, @RequestHeader(name = "Token", required = true) String token){
 
-        // if(!validation.isValidOrder(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
+        if(!validation.isValidOrder(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
 
         List<Orders> ordersList = this.orderServices.listOrdersByUser(id);
         if(ordersList != null){

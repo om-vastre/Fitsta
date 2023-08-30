@@ -17,12 +17,12 @@ public class Validation {
     public boolean isValidProduct(String token){
         if (token != null) {
             List<Logins> foundLogin = this.loginsRepository.findAllByToken(token);
-            if(foundLogin.isEmpty()){
+            if(foundLogin.size() != 1){
                 System.out.println("\n Authentication Error : Empty login!");
                 return false;
             }
             else{
-                if(foundLogin.get(0).getType().equals("user") || foundLogin.get(0).getType().equals("admin")){
+                if(foundLogin.get(0).getType().equals("user") || foundLogin.get(0).getType().equals("trainer")|| foundLogin.get(0).getType().equals("admin")){
                     return true;
                 }
                 else{
@@ -39,7 +39,7 @@ public class Validation {
     public boolean isValidTrainer(String token){
         if (token != null) {
             List<Logins> foundLogin = this.loginsRepository.findAllByToken(token);
-            if(foundLogin.isEmpty()){
+            if(foundLogin.size() != 1){
                 System.out.println("\n Authentication Error : Empty login!");
                 return false;
             }
@@ -61,7 +61,7 @@ public class Validation {
     public boolean isValidUser(String token){
         if (token != null) {
             List<Logins> foundLogin = this.loginsRepository.findAllByToken(token);
-            if(foundLogin.isEmpty()){
+            if(foundLogin.size() != 1){
                 System.out.println("\n Authentication Error : Empty login!");
                 return false;
             }
@@ -83,12 +83,12 @@ public class Validation {
     public boolean isValidPlans(String token){
         if (token != null) {
             List<Logins> foundLogin = this.loginsRepository.findAllByToken(token);
-            if(foundLogin.isEmpty()){
+            if(foundLogin.size() != 1){
                 System.out.println("\n Authentication Error : Empty login!");
                 return false;
             }
             else{
-                if(foundLogin.get(0).getType().equals("user") || foundLogin.get(0).getType().equals("admin")){
+                if(foundLogin.get(0).getType().equals("user") || foundLogin.get(0).getType().equals("admin") || foundLogin.get(0).getType().equals("trainer")){
                     return true;
                 }
                 else{
@@ -105,12 +105,12 @@ public class Validation {
     public boolean isValidPlansPurchase(String token){
         if (token != null) {
             List<Logins> foundLogin = this.loginsRepository.findAllByToken(token);
-            if(foundLogin.isEmpty()){
+            if(foundLogin.size() != 1){
                 System.out.println("\n Authentication Error : Empty login!");
                 return false;
             }
             else{
-                if(foundLogin.get(0).getType().equals("user") || foundLogin.get(0).getType().equals("admin")){
+                if(foundLogin.get(0).getType().equals("user") || foundLogin.get(0).getType().equals("trainer")|| foundLogin.get(0).getType().equals("admin")){
                     return true;
                 }
                 else{
@@ -127,12 +127,40 @@ public class Validation {
     public boolean isValidTask(String token){
         if (token != null) {
             List<Logins> foundLogin = this.loginsRepository.findAllByToken(token);
-            if(foundLogin.isEmpty()){
+            if(foundLogin.size() != 1){
                 System.out.println("\n Authentication Error : Empty login!");
                 return false;
             }
             else{
-                if(foundLogin.get(0).getType().equals("user") || foundLogin.get(0).getType().equals("trainer")){
+                if(foundLogin.get(0).getType().equals("user") || foundLogin.get(0).getType().equals("trainer")|| foundLogin.get(0).getType().equals("admin")){
+                    return true;
+                }
+                else{
+                    System.out.println("\n Authentication Error : Invalid user login!");
+                    return false;
+                }
+            }
+        } else {
+            System.out.println("\nAuthentication Error : Token not received!");
+            return false;
+        }
+    }
+
+    public boolean isValidOrder(String token){
+        if (token != null) {
+
+            List<Logins> foundLogin = this.loginsRepository.findByToken(token);
+            
+            System.out.println("Token found : "+foundLogin.get(0).getToken());
+            System.out.println("Token found : "+foundLogin.get(0).getType());
+            System.out.println("Token found : "+foundLogin.get(0).getType().equals("user"));
+
+            if(foundLogin.size() != 1){
+                System.out.println("\n Authentication Error : Empty login!");
+                return false;
+            }
+            else{
+                if(foundLogin.get(0).getType().equals("user") || foundLogin.get(0).getType().equals("trainer")|| foundLogin.get(0).getType().equals("admin")){
                     return true;
                 }
                 else{

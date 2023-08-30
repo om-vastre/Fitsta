@@ -43,7 +43,7 @@ public class TrainerController {
     @GetMapping("/{id}")
     public ResponseEntity<Trainer> getTrainer(@PathVariable("id") Integer id, @RequestHeader(name = "Token", required = true) String token) {
 
-        // if(!validation.isValidProduct(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
+        if(!validation.isValidProduct(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
 
         Trainer gotTrainer = this.trainerServices.getTrainer(id);
         if (gotTrainer != null){
@@ -71,7 +71,7 @@ public class TrainerController {
         @RequestHeader(name = "Token", required = true) String token
     ){
 
-        // if(!validation.isValidProduct(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
+        if(!validation.isValidProduct(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
 
         Trainer newTrainer = new Trainer();
 
@@ -131,7 +131,7 @@ public class TrainerController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteTrainer(@PathVariable("id") Integer id, @RequestHeader(name = "Token", required = true) String token){
 
-        // if(!validation.isValidTrainer(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
+        if(!validation.isValidTrainer(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
 
         String result = this.trainerServices.deleteTrainer(id);
 
@@ -146,7 +146,7 @@ public class TrainerController {
     @GetMapping("/list")
     public ResponseEntity<List<TrainerListRequest>> listTrainers(@RequestHeader(name = "Token", required = true) String token){
 
-        // if(!validation.isValidTrainer(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
+        if(!validation.isValidTrainer(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
 
         List<TrainerListRequest> trainersList = this.trainerServices.listTrainers();
         if(trainersList != null){

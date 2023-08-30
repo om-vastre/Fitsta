@@ -36,8 +36,6 @@ public class UserController {
     @PostMapping("/create")
     public ResponseEntity<String> createUser(@RequestBody CreateUserRequest recUser){
 
-        // if(!validation.isValidUser(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
-
         try {
             User newUser = new User();
             newUser.setId(recUser.getId());
@@ -72,8 +70,6 @@ public class UserController {
     @PostMapping("/update")
     public ResponseEntity<String> updateUser(@RequestBody UpdateUserRequest recUser){
 
-        // if(!validation.isValidUser(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
-
         String result = userServices.updateUser(recUser);
 
         if(!result.equals("Error")){
@@ -89,7 +85,7 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<User> getUser(@PathVariable("id") Integer id, @RequestHeader(name = "Token", required = true) String token) {
 
-        // if(!validation.isValidUser(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
+        if(!validation.isValidUser(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
 
         User gotUser = this.userServices.getUser(id);
         if (gotUser != null){
@@ -104,7 +100,7 @@ public class UserController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable("id") Integer id, @RequestHeader(name = "Token", required = true) String token){
 
-        // if(!validation.isValidProduct(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
+        if(!validation.isValidProduct(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
         
         String result = this.userServices.deleteUser(id);
 
@@ -119,7 +115,7 @@ public class UserController {
     @GetMapping("/list")
     public ResponseEntity<List<User>> listUsers(@RequestHeader(name = "Token", required = true) String token){
 
-        // if(!validation.isValidProduct(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
+        if(!validation.isValidProduct(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
 
         List<User> usersList = this.userServices.listUsers();
         if(usersList != null){

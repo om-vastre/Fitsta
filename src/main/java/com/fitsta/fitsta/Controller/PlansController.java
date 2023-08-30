@@ -39,7 +39,7 @@ public class PlansController {
     @PostMapping("/create")
     public ResponseEntity<String> createPlan(@RequestBody CreatePlanRequest recPlan, @RequestHeader(name = "Token", required = true) String token){
 
-        // if(!validation.isValidPlans(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
+        if(!validation.isValidPlans(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
 
         Trainer tempTrainer = this.trainerRepository.findById(recPlan.getPlanstrainer()).get();
         Plans newPlans = new Plans(recPlan.getId(), recPlan.getName(), recPlan.getType(), recPlan.getFeatures(), recPlan.getPrice(), recPlan.getDuration(),  tempTrainer, null);
@@ -59,7 +59,7 @@ public class PlansController {
     @PutMapping("/update")
     public ResponseEntity<String> updatePlan(@RequestBody UpdatePlanRequest recPlan, @RequestHeader(name = "Token", required = true) String token){
 
-        // if(!validation.isValidPlans(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
+        if(!validation.isValidPlans(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
 
         String result = this.plansServices.updatePlan(recPlan);
 
@@ -76,8 +76,6 @@ public class PlansController {
     @GetMapping("/{id}")
     public ResponseEntity<Plans> getPlan(@PathVariable("id") Integer id) {
 
-        // if(!validation.isValidPlans(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
-
         Plans gotPlans = this.plansServices.getPlan(id);
         if (gotPlans != null){
             return ResponseEntity.ok(gotPlans);
@@ -91,7 +89,7 @@ public class PlansController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletePlans(@PathVariable("id") Integer id, @RequestHeader(name = "Token", required = true) String token){
 
-        // if(!validation.isValidPlans(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
+        if(!validation.isValidPlans(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
         
         String result = this.plansServices.deletePlans(id);
 
@@ -105,8 +103,6 @@ public class PlansController {
 
     @GetMapping("/list")
     public ResponseEntity<List<Plans>> listPlanss(){
-
-        // if(!validation.isValidPlans(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
 
         List<Plans> plansList = this.plansServices.listPlans();
         if(plansList != null){
