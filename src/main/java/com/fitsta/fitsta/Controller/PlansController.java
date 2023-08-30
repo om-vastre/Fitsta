@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fitsta.fitsta.Component.Validation;
 import com.fitsta.fitsta.DTO.CreatePlanRequest;
+import com.fitsta.fitsta.DTO.UpdatePlanRequest;
 import com.fitsta.fitsta.Entity.Plans;
 import com.fitsta.fitsta.Entity.Trainer;
 import com.fitsta.fitsta.Repository.TrainerRepository;
@@ -43,6 +45,22 @@ public class PlansController {
         Plans newPlans = new Plans(recPlan.getId(), recPlan.getName(), recPlan.getType(), recPlan.getFeatures(), recPlan.getPrice(), recPlan.getDuration(),  tempTrainer, null);
 
         String result = this.plansServices.createPlan(newPlans);
+
+        if(result.equals("Success")){
+            return ResponseEntity.status(HttpStatus.OK).body("{\"Success\":\"Operation successful.\"}");
+        }
+        else{
+            System.out.println("Error while new plan creation : " + result);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"Error\":\"Failed to create new plan!\"}");
+        }
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<String> updatePlan(@RequestBody UpdatePlanRequest recPlan, @RequestHeader(name = "Token", required = true) String token){
+
+        // if(!validation.isValidPlans(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
+
+        String result = this.plansServices.updayePlan(recPlan);
 
         if(result.equals("Success")){
             return ResponseEntity.status(HttpStatus.OK).body("{\"Success\":\"Operation successful.\"}");

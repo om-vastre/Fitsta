@@ -36,6 +36,7 @@ public class AdminController {
     
     private static final String CHARS="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
+
     public static String generateToken(int length) {
         Random random = new Random();
         StringBuilder sb = new StringBuilder();
@@ -44,6 +45,7 @@ public class AdminController {
         }
         return sb.toString();
     }
+
 
     @PostMapping(value="/login")
     public ResponseEntity<String> Login(@RequestParam("username") String username, @RequestParam("password") String password) {
@@ -89,5 +91,6 @@ public class AdminController {
             return ResponseEntity.status(HttpStatus.OK).body("{\"message\":\"Falied to Logout!\"}");
         }
     }
+
 
 }

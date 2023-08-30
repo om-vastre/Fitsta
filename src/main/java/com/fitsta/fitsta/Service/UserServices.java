@@ -67,6 +67,7 @@ public class UserServices {
         }
     }
 
+    
     public String updateUser(UpdateUserRequest recUser){
         User existingUser = this.userRepository.findById(recUser.getId()).orElse(null);
         if (existingUser == null) {

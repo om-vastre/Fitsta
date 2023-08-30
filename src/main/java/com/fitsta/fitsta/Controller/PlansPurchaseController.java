@@ -41,6 +41,7 @@ public class PlansPurchaseController {
     @Autowired
     private Validation validation;
 
+
     @GetMapping("/{id}")
     public ResponseEntity<PlansPurchase> getPlansPurchase(@PathVariable("id") Integer id, @RequestHeader(name = "Token", required = true) String token){
         // if(!validation.isValidPlansPurchase(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
@@ -50,7 +51,7 @@ public class PlansPurchaseController {
     }
 
 
-    @PutMapping("/create")
+    @PostMapping("/create")
     public ResponseEntity<String> createPlansPurchase(@RequestBody CreatePlansPurchaseRequest newPlansPurchaseRequest){
 
         // if(!validation.isValidPlansPurchase(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
