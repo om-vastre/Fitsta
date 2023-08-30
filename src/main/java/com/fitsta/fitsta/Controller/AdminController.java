@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fitsta.fitsta.Component.EmailSender;
+import com.fitsta.fitsta.DTO.ContactUsRequest;
 import com.fitsta.fitsta.Entity.Logins;
 import com.fitsta.fitsta.Repository.LoginsRepository;
 import com.fitsta.fitsta.Service.AdminServices;
@@ -93,5 +95,9 @@ public class AdminController {
         }
     }
 
-
+    @PostMapping("/contactus")
+    public ResponseEntity<String> ContactUs(@RequestBody ContactUsRequest newRequest){
+        EmailSender.contactUsMail(newRequest);
+        return ResponseEntity.ok("Request Send");
+    }
 }

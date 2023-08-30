@@ -7,6 +7,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.SimpleMailMessage;
 
+import com.fitsta.fitsta.DTO.ContactUsRequest;
 import com.fitsta.fitsta.Entity.Orders;
 import com.fitsta.fitsta.Entity.Plans;
 import com.fitsta.fitsta.Entity.User;
@@ -55,6 +56,23 @@ public class EmailSender {
         return otp;
     }
 
+
+    public static void contactUsMail(ContactUsRequest newRequest) {
+        JavaMailSender mailSender = configureMailSender();
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo("buddhashorse@gmail.com");
+        message.setSubject("New Request to contact us");
+
+        String msg = "";
+        msg += "\nNew Request to contact us : ";
+        msg += "Name : " + newRequest.getName() + "\n";
+        msg += "Contact Details : " + newRequest.getContactno() + "\n";
+        msg += "Message : " + newRequest.getMsg() + "\n";
+        
+        message.setText(msg);
+        mailSender.send(message);
+        System.out.println("Contact us mail sent successfully.");
+    }
 
     private static void sendOrderReceipt(JavaMailSender mailSender, Orders order) {
         SimpleMailMessage message = new SimpleMailMessage();
