@@ -64,7 +64,7 @@ public class EmailSender {
         message.setSubject("New Request to contact us");
 
         String msg = "";
-        msg += "\nNew Request to contact us : ";
+        msg += "\nNew Request to contact us : \n";
         msg += "Name : " + newRequest.getName() + "\n";
         msg += "Contact Details : " + newRequest.getContactno() + "\n";
         msg += "Message : " + newRequest.getMsg() + "\n";
