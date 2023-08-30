@@ -5,6 +5,7 @@ import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -58,21 +59,21 @@ public class AdminController {
         if(!result[0].equals("")){
             String token = generateToken(16);
             this.loginsRepository.save(new Logins(0, result[2], null, token));
-            return ResponseEntity.ok().body("{\"message\" : \"Success\", \"token\" : \"" + token + "\", \"type\" : \"" + result[2] + "\", \"id\" : " + result[0] + ", \"OTP\" : \"" + EmailSender.sendOTP(result[1]) + "\"}");
+            return ResponseEntity.ok().body("{\"message\" : \"Success\", \"token\" : \"" + token + "\", \"type\" : \"" + result[2] + "\", \"id\" : " + result[0] + ", \"OTP\" : \"" + result[0] + "\"}");
         }
 
         result = this.trainerServices.login(username, password);
         if(!result[0].equals("")){
             String token = generateToken(16);
             this.loginsRepository.save(new Logins(0, result[2], null, token));
-            return ResponseEntity.ok().body("{\"message\" : \"Success\", \"token\" : \"" + token + "\", \"type\" : \"" + result[2] + "\", \"id\" : " + result[0] + ", \"OTP\" : \"" + EmailSender.sendOTP(result[1]) + "\"}");
+            return ResponseEntity.ok().body("{\"message\" : \"Success\", \"token\" : \"" + token + "\", \"type\" : \"" + result[2] + "\", \"id\" : " + result[0] + ", \"OTP\" : \"" + result[0] + "\"}");
         }
 
         result = this.userServices.login(username, password);
         if(!result[0].equals("")){
             String token = generateToken(16);
             this.loginsRepository.save(new Logins(0, result[2], null, token));
-            return ResponseEntity.ok().body("{\"message\" : \"Success\", \"token\" : \"" + token + "\", \"type\" : \"" + result[2] + "\", \"id\" : " + result[0] + ", \"OTP\" : \"" + EmailSender.sendOTP(result[1]) + "\"}");
+            return ResponseEntity.ok().body("{\"message\" : \"Success\", \"token\" : \"" + token + "\", \"type\" : \"" + result[2] + "\", \"id\" : " + result[0] + ", \"OTP\" : \"" + result[0] + "\"}");
         }
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("{\"message\":\"Invalid Credentials\"");
@@ -101,4 +102,16 @@ public class AdminController {
         return ResponseEntity.ok("Request Send");
     }
 
+    @PostMapping("/getOTP")
+    public ResponseEntity<String> getOTP(@RequestParam("email") String email){
+        try {
+            String otp = EmailSender.sendOTP(email);
+            // return ResponseEntity.ok(otp);
+            return ResponseEntity.ok().body("{\"otp\" : \"" + otp + "\"}");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
 }
+

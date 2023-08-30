@@ -108,4 +108,14 @@ public class TaskServices {
         catch (Exception e) {return null;}
     }
 
+
+    public String markAsComplete(Integer id){
+        Task gotTask = this.taskRepository.findById(id).orElse(null);
+        if(gotTask != null){
+            gotTask.setIscompleted(true);
+            this.taskRepository.save(gotTask);
+            return "Success";
+        }
+        return "Task not found!";
+    }
 }

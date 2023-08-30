@@ -120,4 +120,21 @@ public class TaskController {
         }
     }
 
+
+    @GetMapping("/markcomplete/{id}")
+    public ResponseEntity<String> markAsComplete(@PathVariable("id") Integer id, @RequestHeader(name = "Token", required = true) String token){
+
+        if(!validation.isValidTask(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
+
+        String result = this.taskServices.markAsComplete(id);
+
+        if(result.equals("Success")){
+            return ResponseEntity.status(HttpStatus.OK).body("{\"Success\":\"Operation successful.\"}");
+        }
+        else{
+            System.out.println("Error while updating task completion status : " + result);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"Error\":\"Failed to update task!\"}");
+        }
+    }
+
 }
