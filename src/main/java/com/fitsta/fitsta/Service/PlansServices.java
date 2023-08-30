@@ -37,7 +37,8 @@ public class PlansServices {
         }
     }
 
-    public String updayePlan(UpdatePlanRequest recPlan){
+
+    public String updatePlan(UpdatePlanRequest recPlan){
 
         Optional<Plans> optionalPlan = plansRepository.findById(recPlan.getId());
         if (!optionalPlan.isPresent()) {return "Plan not found";}

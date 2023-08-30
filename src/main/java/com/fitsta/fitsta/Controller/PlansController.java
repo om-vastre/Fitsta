@@ -55,19 +55,20 @@ public class PlansController {
         }
     }
 
+
     @PutMapping("/update")
     public ResponseEntity<String> updatePlan(@RequestBody UpdatePlanRequest recPlan, @RequestHeader(name = "Token", required = true) String token){
 
         // if(!validation.isValidPlans(token)){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
 
-        String result = this.plansServices.updayePlan(recPlan);
+        String result = this.plansServices.updatePlan(recPlan);
 
         if(result.equals("Success")){
             return ResponseEntity.status(HttpStatus.OK).body("{\"Success\":\"Operation successful.\"}");
         }
         else{
-            System.out.println("Error while new plan creation : " + result);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"Error\":\"Failed to create new plan!\"}");
+            System.out.println("Error while updating plan : " + result);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"Error\":\"Failed to update plan!\"}");
         }
     }
 

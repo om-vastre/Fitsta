@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fitsta.fitsta.DTO.UpdateProductRequest;
 import com.fitsta.fitsta.Entity.Orders;
 import com.fitsta.fitsta.Entity.Product;
 import com.fitsta.fitsta.Repository.OrderRepository;
@@ -24,6 +25,40 @@ public class ProductServices {
     public String createProduct(Product newProduct){
         try {
             this.productRepository.save(newProduct);
+            return "Success";
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+    }
+
+
+    public String updateProduct(UpdateProductRequest recProduct){
+
+        Optional<Product> optionalProduct = this.productRepository.findById(recProduct.getId());
+        if (!optionalProduct.isPresent()) {return "Plan not found";}
+
+        Product existingProduct = optionalProduct.get();
+        existingProduct.setName(recProduct.getName());
+        existingProduct.setDescription(recProduct.getDescription());
+        // existingProduct.setImage1(recProduct.getImage1());
+        // existingProduct.setImage2(recProduct.getImage2());
+        // existingProduct.setImage3(recProduct.getImage3());
+        // existingProduct.setImage4(recProduct.getImage4());
+        existingProduct.setProductPrice(recProduct.getProductPrice());
+
+        List<Orders> updatedOrders = new ArrayList<>();
+        for (Integer orderId : recProduct.getOrders()) {
+            Optional<Orders> optionalOrder = orderRepository.findById(orderId);
+            optionalOrder.ifPresent(updatedOrders::add);
+        }
+        if(!updatedOrders.isEmpty()){
+            existingProduct.getOrders().clear();
+            existingProduct.getOrders().addAll(updatedOrders);
+            // existingProduct.setOrders(updatedOrders);
+        }
+
+        try {
+            this.productRepository.save(existingProduct);
             return "Success";
         } catch (Exception e) {
             return e.getMessage();

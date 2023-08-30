@@ -80,8 +80,8 @@ public class UserController {
             return ResponseEntity.ok().body("{\"message\" : \"Operation successful\", \"id\": " + result + "}");
         }
         else{
-            System.out.println("Error while new user creation : " + result);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"Error\":\"Failed to create new user!\"}");
+            System.out.println("Error while updating user : " + result);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"Error\":\"Failed to update user!\"}");
         }
     }
 
